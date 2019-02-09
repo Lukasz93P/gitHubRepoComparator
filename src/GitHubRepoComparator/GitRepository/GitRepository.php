@@ -13,4 +13,9 @@ interface GitRepository
      * @return string
      */
     public function getName();
+
+    /**
+     * @return string
+     */
+    public function getFullName();
 }

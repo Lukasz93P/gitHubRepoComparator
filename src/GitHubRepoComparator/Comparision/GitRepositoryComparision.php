@@ -4,11 +4,14 @@ namespace GitHubRepoComparator\Comparision;
 
 interface GitRepositoryComparision extends GitRepositoryComparisionBase
 {
-    const FIRST_REPO_COMPARISION_KEY = 'first';
-    const SECOND_REPO_COMPARISION_KEY = 'second';
-
     const QUANTITY_COMPARISION_KEY = 'quantity';
     const PERCENTAGE_COMPARISION_KEY = 'percentage';
+    const BETTER_SCORE_COMPARISION_KEY = 'better';
+    const TIE_COMPARISION_KEY = 'tie';
+
+    const RELEASE_DATE_COMPARISION_FORMAT = 'Y-m-d';
+    const RELEASE_DATE_COMPARISION_NEWER_KEY = 'newer';
+    const RELEASE_DATE_COMPARISION_DIFF_KEY = 'diff';
 
     /**
      * @return array
