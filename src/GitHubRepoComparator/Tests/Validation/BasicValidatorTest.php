@@ -111,4 +111,20 @@ class BasicValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($testException);
         $this->assertEquals(array('testKey' => array('Cannot be lower/shorter than 10')), $testException->getValidationErrors());
     }
+
+    public function testShouldThrowValidationExceptionForMaxValueWithMinAlsoSpecified(){
+        $data = array('testKey' => 'testValue', 'secondTestKey' => 'veeeeryLonggggWorddddd');
+        $rules = array('testKey' => 'max:10', 'secondTestKey' => 'max:4|min:2');
+
+        $testException = false;
+
+        try {
+            $this->validator->validate($rules, $data);
+        } catch (\Exception $exception) {
+            $testException = $exception;
+        }
+
+        $this->assertNotEmpty($testException);
+        $this->assertEquals(array('secondTestKey' => array('Cannot be greater than 4')), $testException->getValidationErrors());
+    }
 }

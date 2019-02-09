@@ -11,6 +11,11 @@ final class BasicValidator implements Validator
      */
     private $validationErrors;
 
+    /**
+     * @param array $rules
+     * @param array $data
+     * @throws ValidationException
+     */
     public function validate(array $rules, array $data)
     {
         foreach ($rules as $validatedPropertyName => $validationRule) {
