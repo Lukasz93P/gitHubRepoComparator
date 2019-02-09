@@ -3,8 +3,9 @@
 namespace GitHubRepoComparator\GitRepository\ComparableRepository;
 
 use GitHubRepoComparator\GitRepository\GitRepository;
+use GitHubRepoComparator\Serialization\Serializable\Serializable;
 
-interface ComparableGitRepository extends GitRepository
+interface ComparableGitRepository extends GitRepository, Serializable
 {
     /**
      * @param int $starsQuantity

@@ -7,7 +7,7 @@ use GitHubRepoComparator\GitRepository\ComparableRepository\BasicComparableGitRe
 use GitHubRepoComparator\GitRepository\ComparableRepository\ComparableGitRepository;
 use GitHubRepoComparator\GitRepository\GitRepository;
 
-final class BasicGitRepositoryFactory implements GitRepositoryFactory
+class BasicGitRepositoryFactory implements GitRepositoryFactory
 {
     /**
      * @param string $authorName

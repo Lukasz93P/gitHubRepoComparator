@@ -7,14 +7,15 @@ use GitHubRepoComparator\Comparision\ComparisionDataSource;
 use GitHubRepoComparator\Comparision\GitRepositoryComparision;
 use GitHubRepoComparator\GitRepository\ComparableRepository\ComparableGitRepository;
 
-final class BasicGitRepositoryComparisionBuilder extends AbstractComparisionBuilder
+class BasicGitRepositoryComparisionBuilder extends AbstractComparisionBuilder
 {
     /**
      * @return GitRepositoryComparision
      */
     public function build()
     {
-        return new BasicGitRepositoryComparision($this->firstComparedRepository,
+        return new BasicGitRepositoryComparision(
+            $this->firstComparedRepository,
             $this->secondComparedRepository,
             $this->starsComparision,
             $this->forksComparision,

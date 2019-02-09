@@ -4,7 +4,7 @@ namespace GitHubRepoComparator\Comparision;
 
 use GitHubRepoComparator\GitRepository\ComparableRepository\ComparableGitRepository;
 
-final class BasicGitRepositoryComparision extends ComparisionDataSource implements GitRepositoryComparision
+class BasicGitRepositoryComparision extends ComparisionDataSource implements GitRepositoryComparision
 {
     /**
      * BasicGitRepositoryComparision constructor.
@@ -76,5 +76,21 @@ final class BasicGitRepositoryComparision extends ComparisionDataSource implemen
     public function getLastReleaseDateComparision()
     {
         return $this->lastReleaseDateComparision;
+    }
+
+    /**
+     * @return array
+     */
+    public function getComparedRepositories()
+    {
+        return array($this->firstComparedRepository->getFullName() => $this->firstComparedRepository,
+            $this->secondComparedRepository->getFullName() => $this->secondComparedRepository);
+    }
+
+
+    public function getSerializableProperties()
+    {
+        return array('comparedRepositories', 'forksComparision', 'starsComparision',
+            'forksComparision', 'watchersComparision', 'lastReleaseDateComparision');
     }
 }

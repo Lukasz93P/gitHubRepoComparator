@@ -2,7 +2,7 @@
 
 namespace GitHubRepoComparator\GitRepository;
 
-final class BasicGitRepository implements GitRepository
+class BasicGitRepository implements GitRepository
 {
     /**
      * @var string

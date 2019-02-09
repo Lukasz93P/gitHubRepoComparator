@@ -8,7 +8,7 @@ use GitHubRepoComparator\GitRepository\ComparableRepository\ComparableGitReposit
 use GitHubRepoComparator\Http\Client\HttpClient;
 use GitHubRepoComparator\Http\Status\HttpStatus;
 
-final class BasicComparableGitRepositoryDataAmplifier implements ComparableGitRepositoryDataAmplifier
+class BasicComparableGitRepositoryDataAmplifier implements ComparableGitRepositoryDataAmplifier
 {
     /**
      * @var HttpClient
@@ -20,6 +20,7 @@ final class BasicComparableGitRepositoryDataAmplifier implements ComparableGitRe
      */
     private $gitHubApiLinkToFetchRepoData;
 
+    static $counter = 0;
     /**
      * BasicComparableGitRepositoryDataAmplifier constructor.
      * @param HttpClient $httpClient
@@ -61,7 +62,13 @@ final class BasicComparableGitRepositoryDataAmplifier implements ComparableGitRe
         $gitRepository->setWatchersQuantity($repositoryStatisticsData[self::WATCHERS_QUANTITY_GITHUB_RESPONSE_KEY]);
         $gitRepository->setLastReleaseDate(empty($repositoryReleasesData) ? ''
             : $repositoryReleasesData[0][self::PUBLISHED_AT_RELEASE_GITHUB_RESPONSE_KEY]);
-
+//
+//
+//        $gitRepository->setStarsQuantity(static::$counter ? 100 : 20);
+//        $gitRepository->setForksQuantity(static::$counter ? 10 : 20);
+//        $gitRepository->setWatchersQuantity(static::$counter ? 5 : 2);
+//        $gitRepository->setLastReleaseDate(static::$counter ? '2019-02-01' : '2019-01-02');
+//        static::$counter=true;
         return $gitRepository;
     }
 }

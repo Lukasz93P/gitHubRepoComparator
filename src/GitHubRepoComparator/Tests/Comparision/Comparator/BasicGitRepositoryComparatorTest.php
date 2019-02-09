@@ -117,6 +117,14 @@ class BasicGitRepositoryComparatorTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->gitRepositoryComparisionBuilderMock);
 
         $this->gitRepositoryComparisionBuilderMock->expects($this->once())
+            ->method('setFirstComparedRepository')
+            ->willReturn($this->gitRepositoryComparisionBuilderMock);
+
+        $this->gitRepositoryComparisionBuilderMock->expects($this->once())
+            ->method('setSecondComparedRepository')
+            ->willReturn($this->gitRepositoryComparisionBuilderMock);
+
+        $this->gitRepositoryComparisionBuilderMock->expects($this->once())
             ->method('setLastReleaseDateComparision')
             ->with(array(ComparisionHelper::NEWER_DATE_COMPARISION_VALUE => 'author2/repo2',
                 'author2/repo2' => '2019-01-25',

@@ -8,7 +8,7 @@ use GitHubRepoComparator\Comparision\GitRepositoryComparision;
 use GitHubRepoComparator\GitRepository\ComparableRepository\ComparableGitRepository;
 use GitHubRepoComparator\Utils\ComparisionUtils\ComparisionHelper;
 
-final class BasicGitRepositoryComparator implements GitRepositoryComparator
+class BasicGitRepositoryComparator implements GitRepositoryComparator
 {
     /**
      * @var ComparisionBuilder
@@ -38,6 +38,8 @@ final class BasicGitRepositoryComparator implements GitRepositoryComparator
         $lastReleaseDateComparision = $this->compareReleaseDates($firstRepository, $secondRepository);
 
         return $this->comparisionBuilder
+            ->setFirstComparedRepository($firstRepository)
+            ->setSecondComparedRepository($secondRepository)
             ->setStarsComparision($starsComparision)
             ->setForksComparision($forksComparision)
             ->setWatchersComparision($watchersComparision)
@@ -63,7 +65,7 @@ final class BasicGitRepositoryComparator implements GitRepositoryComparator
         $firstRepositoryPercentageScore = $percentageCalculationValues[ComparisionHelper::FIRST_PERCENTAGE_COMPARISION_VALUE];
         $secondRepositoryPercentageScore = $percentageCalculationValues[ComparisionHelper::SECOND_PERCENTAGE_COMPARISION_VALUE];
 
-        if ($firstRepositoryPercentageScore == 50) {
+        if ($firstQuantity == $secondQuantity) {
             $better = GitRepositoryComparision::TIE_COMPARISION_KEY;
         } else {
             $better = $firstRepositoryPercentageScore > $secondRepositoryPercentageScore

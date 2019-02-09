@@ -2,9 +2,7 @@
 
 namespace GitHubRepoComparator\Utils\ComparisionUtils;
 
-use Carbon\Carbon;
-
-final class ComparisionHelper
+class ComparisionHelper
 {
     const FIRST_PERCENTAGE_COMPARISION_VALUE = 'firstPercentage';
     const SECOND_PERCENTAGE_COMPARISION_VALUE = 'secondPercentage';
@@ -25,8 +23,13 @@ final class ComparisionHelper
      */
     public static function comparePercentageShares($firstValue, $secondValue)
     {
-        $firstValuePercentage = (int)floor($firstValue / ($firstValue + $secondValue) * 100);
-        $secondValuePercentage = 100 - $firstValuePercentage;
+        if (($firstValue + $secondValue) == 0) {
+            $firstValuePercentage = 0;
+            $secondValuePercentage = 0;
+        } else {
+            $firstValuePercentage = (int)floor($firstValue / ($firstValue + $secondValue) * 100);
+            $secondValuePercentage = 100 - $firstValuePercentage;
+        }
 
         return array(self::FIRST_PERCENTAGE_COMPARISION_VALUE => $firstValuePercentage,
             self::SECOND_PERCENTAGE_COMPARISION_VALUE => $secondValuePercentage);
