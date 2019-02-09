@@ -4,6 +4,11 @@ namespace GitHubRepoComparator\Http\Client;
 
 interface HttpClient
 {
+    const METHOD_GET = 'get';
+    const METHOD_POST = 'post';
+    const METHOD_DELETE = 'delete';
+    const METHOD_PUT = 'put';
+
     /**
      * @param string $username
      * @param string $password
@@ -27,6 +32,7 @@ interface HttpClient
      * @param string $url
      * @param string $method
      * @return $this
+     * @throws \RuntimeException
      */
     public function sendRequest($url, $method);
 
