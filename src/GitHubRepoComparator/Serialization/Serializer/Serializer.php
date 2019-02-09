@@ -9,6 +9,7 @@ interface Serializer
     /**
      * @param Serializable $serializable
      * @return string
+     * @throws \RuntimeException
      */
     public function serialize(Serializable $serializable);
 }
