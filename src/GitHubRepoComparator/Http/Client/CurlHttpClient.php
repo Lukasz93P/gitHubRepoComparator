@@ -9,7 +9,7 @@ use GitHubRepoComparator\Exception\HttpClientException\HttpClientException;
  * Class CurlHttpClient
  * @package Stereotypes\HttpStereotypes\HttpClient
  */
-final class CurlHttpClient implements HttpClient
+class CurlHttpClient implements HttpClient
 {
     /**
      * @var Curl
@@ -89,7 +89,7 @@ final class CurlHttpClient implements HttpClient
      * @param string $url
      * @param string $method
      * @return $this
-     * @throws \RuntimeException
+     * @throws HttpClientException
      */
     public function sendRequest($url, $method)
     {

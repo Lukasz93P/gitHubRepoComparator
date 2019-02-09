@@ -40,4 +40,12 @@ final class BasicGitRepository implements GitRepository
     {
         return $this->name;
     }
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->authorName . '/' . $this->name;
+    }
 }

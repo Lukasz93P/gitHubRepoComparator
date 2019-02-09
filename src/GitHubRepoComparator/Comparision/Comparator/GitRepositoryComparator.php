@@ -8,9 +8,9 @@ use GitHubRepoComparator\GitRepository\ComparableRepository\ComparableGitReposit
 interface GitRepositoryComparator
 {
     /**
-     * @param ComparableGitRepository $firstRepo
-     * @param ComparableGitRepository $secondRepo
+     * @param ComparableGitRepository $firstRepository
+     * @param ComparableGitRepository $secondRepository
      * @return GitRepositoryComparision
      */
-    public function compare(ComparableGitRepository $firstRepo, ComparableGitRepository $secondRepo);
+    public function compare(ComparableGitRepository $firstRepository, ComparableGitRepository $secondRepository);
 }

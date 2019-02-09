@@ -2,6 +2,8 @@
 
 namespace GitHubRepoComparator\Http\Client;
 
+use GitHubRepoComparator\Exception\HttpClientException\HttpClientException;
+
 interface HttpClient
 {
     const METHOD_GET = 'get';
@@ -32,7 +34,7 @@ interface HttpClient
      * @param string $url
      * @param string $method
      * @return $this
-     * @throws \RuntimeException
+     * @throws HttpClientException
      */
     public function sendRequest($url, $method);
 

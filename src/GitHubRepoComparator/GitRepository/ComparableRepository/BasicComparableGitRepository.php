@@ -4,7 +4,7 @@ namespace GitHubRepoComparator\GitRepository\ComparableRepository;
 
 use GitHubRepoComparator\GitRepository\GitRepository;
 
-final class BasicComparableGitRepository implements ComparableGitRepository
+class BasicComparableGitRepository implements ComparableGitRepository
 {
     /**
      * @var GitRepository
@@ -54,6 +54,14 @@ final class BasicComparableGitRepository implements ComparableGitRepository
     public function getName()
     {
         return $this->gitRepository->getName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->gitRepository->getFullName();
     }
 
     /**
