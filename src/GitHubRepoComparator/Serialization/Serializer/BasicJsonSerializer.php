@@ -8,7 +8,7 @@ use GitHubRepoComparator\Serialization\Serializable\Serializable;
  * Class BasicJsonSerializer
  * @package Stereotypes\ApiStereotypes\Serializer
  */
-class BasicJsonSerializer implements Serializer
+final class BasicJsonSerializer implements Serializer
 {
     /**
      * @param Serializable $serializable
