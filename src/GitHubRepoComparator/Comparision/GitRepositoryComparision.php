@@ -5,21 +5,9 @@ namespace GitHubRepoComparator\Comparision;
 interface GitRepositoryComparision extends GitRepositoryComparisionBase
 {
     /**
-     * @param array $starsComparision
-     * @return $this
-     */
-    public function setStarsComparision(array $starsComparision);
-
-    /**
      * @return array
      */
     public function getStarsComparision();
-
-    /**
-     * @param array $forksComparison
-     * @return $this
-     */
-    public function setForksComparision(array $forksComparison);
 
     /**
      * @return array
@@ -27,16 +15,9 @@ interface GitRepositoryComparision extends GitRepositoryComparisionBase
     public function getForksComparision();
 
     /**
-     * @param array $watchersComparision
-     * @return $this
+     * @return mixed
      */
-    public function setWatchersComparision(array $watchersComparision);
-
-    /**
-     * @param array $lastReleaseDateComparision
-     * @return $this
-     */
-    public function setLastReleaseDateComparision(array $lastReleaseDateComparision);
+    public function getWatchersComparision();
 
     /**
      * @return array

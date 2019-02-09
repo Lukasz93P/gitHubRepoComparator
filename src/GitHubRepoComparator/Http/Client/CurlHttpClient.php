@@ -9,7 +9,7 @@ use GitHubRepoComparator\Exception\HttpClientException\HttpClientException;
  * Class CurlHttpClient
  * @package Stereotypes\HttpStereotypes\HttpClient
  */
-class CurlHttpClient implements HttpClient
+final class CurlHttpClient implements HttpClient
 {
     /**
      * @var Curl

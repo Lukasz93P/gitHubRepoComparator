@@ -4,7 +4,7 @@ namespace GitHubRepoComparator\Validation;
 
 use GitHubRepoComparator\Exception\Validation\ValidationException;
 
-class BasicValidator implements Validator
+final class BasicValidator implements Validator
 {
     /**
      * @var array
