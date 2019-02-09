@@ -1,0 +1,4 @@
+_comparator:
+  resource: "@MainBundle/Controller/ComparisionController.php"
+  type:     annotation
+  prefix:   /comparator

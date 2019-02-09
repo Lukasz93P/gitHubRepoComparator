@@ -147,4 +147,12 @@ class BasicComparableGitRepository implements ComparableGitRepository
             return call_user_func_array(array($this->gitRepository, $name), $arguments);
         }
     }
+
+    /**
+     * @return array
+     */
+    public function getSerializableProperties()
+    {
+        return array('authorName', 'name', 'fullName');
+    }
 }

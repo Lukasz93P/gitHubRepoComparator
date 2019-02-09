@@ -23,7 +23,7 @@ class BasicJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $serializable = $this->getMock('GitHubRepoComparator\Serialization\Serializable\Serializable',
             array('getSerializableProperties', 'getName', 'getEmail', 'getAge', 'getCity'));
 
-        $serializable->expects($this->once())
+        $serializable->expects($this->exactly(2))
             ->method('getSerializableProperties')
             ->will($this->returnValue(array('name', 'email', 'age')));
 
@@ -57,7 +57,7 @@ class BasicJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $serializable = $this->getMock('GitHubRepoComparator\Serialization\Serializable\Serializable',
             array('getSerializableProperties', 'getName', 'getEmail', 'getAge', 'getCity'));
 
-        $serializable->expects($this->once())
+        $serializable->expects($this->exactly(2))
             ->method('getSerializableProperties')
             ->will($this->returnValue(array('name', 'email', 'age', 'city')));
 
@@ -91,7 +91,7 @@ class BasicJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $serializable = $this->getMock('GitHubRepoComparator\Serialization\Serializable\Serializable',
             array('getSerializableProperties'));
 
-        $serializable->expects($this->once())
+        $serializable->expects($this->exactly(2))
             ->method('getSerializableProperties')
             ->will($this->returnValue(array()));
 

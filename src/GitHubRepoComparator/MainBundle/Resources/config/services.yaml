@@ -1,0 +1,39 @@
+services:
+  serializer:
+    class: GitHubRepoComparator\Serialization\Serializer\BasicJsonSerializer
+  customValidator:
+    class: GitHubRepoComparator\Validation\BasicValidator
+  httpClient:
+    class: GitHubRepoComparator\Http\Client\CurlHttpClient
+  gitRepositoryFactory:
+    class: GitHubRepoComparator\GitRepository\Factory\BasicGitRepositoryFactory
+  comparisionBuilder:
+    class: GitHubRepoComparator\Comparision\ComparisionBuilder\BasicGitRepositoryComparisionBuilder
+  gitRepositoryComparator:
+    class: GitHubRepoComparator\Comparision\Comparator\BasicGitRepositoryComparator
+    arguments: [@comparisionBuilder]
+  repositoryAmplifier:
+    class: GitHubRepoComparator\ComparableGitRepositoryDataAmplifier\BasicComparableGitRepositoryDataAmplifier
+    arguments: [@httpClient, 'https://api.github.com/repos']
+  actionValidateRepositoryData:
+    class: GitHubRepoComparator\Actions\RepositoryDataValidation\BasicValidateRepositoryAction
+    arguments: [@customValidator]
+  actionCreateComparableRepository:
+    class: GitHubRepoComparator\Actions\RepositoryCreation\BasicCreateComparableRepositoryAction
+    arguments: [@gitRepositoryFactory, @actionValidateRepositoryData]
+  actionAmplifyGitRepository:
+    class: GitHubRepoComparator\Actions\ComparableGitRepositoryAmplification\BasicAmplifyComparableGitRepositoryAction
+    arguments: [@repositoryAmplifier]
+  actionCompareRepositories:
+    class: GitHubRepoComparator\Actions\RepositoryComparision\BasicCompareRepositoriesAction
+    arguments: [@gitRepositoryComparator]
+  actionProcessComparisionRequest:
+    class: GitHubRepoComparator\Actions\RepositoryComparisionRequestProcessing\BaseActionProcessRepositoryComparisionRequestAction
+    arguments: [@actionCreateComparableRepository, @actionAmplifyGitRepository, @actionCompareRepositories]
+  comparisionController:
+    class: GitHubRepoComparator\MainBundle\Controller\ComparisionController
+#    arguments: [@actionProcessComparisionRequest, @serializer]
+  api.error.handler:
+    class: GitHubRepoComparator\MainBundle\EventListener\ApiExceptionHandler
+    tags:
+    - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
