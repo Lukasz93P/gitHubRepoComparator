@@ -10,12 +10,14 @@ class RepositoryNotFoundException extends ApiException
 {
     /**
      * RepositoryNotFoundException constructor.
-     * @param string $message
+     * @param string $repositoryAuthorName
+     * @param string $repositoryName
      * @param int $code
      * @param Throwable|null $previous
      */
-    public function __construct($message = "", $code = HttpStatus::HTTP_STATUS_NOT_FOUND, Throwable $previous = null)
+    public function __construct($repositoryAuthorName, $repositoryName, $code = HttpStatus::HTTP_STATUS_NOT_FOUND, Throwable $previous = null)
     {
-        parent::__construct($message, $code, $previous);
+        parent::__construct('Repository ' . $repositoryName . ' by '
+            . $repositoryAuthorName . ' not found', $code, $previous);
     }
 }

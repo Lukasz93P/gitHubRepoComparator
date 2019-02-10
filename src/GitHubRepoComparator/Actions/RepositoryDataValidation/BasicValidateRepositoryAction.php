@@ -3,7 +3,6 @@
 namespace GitHubRepoComparator\Actions\RepositoryDataValidation;
 
 use GitHubRepoComparator\Exception\Validation\ValidationException;
-use GitHubRepoComparator\GitRepository\GitRepository;
 use GitHubRepoComparator\Validation\Validator;
 
 class BasicValidateRepositoryAction implements ActionValidateRepositoryData
