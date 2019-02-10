@@ -4,7 +4,7 @@ namespace GitHubRepoComparator\Comparision;
 
 use GitHubRepoComparator\Serialization\Serializable\Serializable;
 
-interface GitRepositoryComparision extends GitRepositoryComparisionBase, Serializable
+interface GitRepositoryComparision extends Serializable
 {
     const QUANTITY_COMPARISION_KEY = 'quantity';
     const PERCENTAGE_COMPARISION_KEY = 'percentage';

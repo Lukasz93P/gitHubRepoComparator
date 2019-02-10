@@ -1,0 +1,1 @@
+export const COMPARATOR_API_URL = '/symfony/gitHubRepoComparator/web/app_dev.php/comparator/compare/';

@@ -1,8 +1,3 @@
-_comparator:
-    resource: "@MainBundle/Controller/ComparisionController.php"
-    type:     annotation
-    prefix:   /comparator_dev
-
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
     prefix:   /_wdt

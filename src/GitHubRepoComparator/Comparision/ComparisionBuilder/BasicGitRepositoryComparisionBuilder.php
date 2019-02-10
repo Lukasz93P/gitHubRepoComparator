@@ -3,9 +3,7 @@
 namespace GitHubRepoComparator\Comparision\ComparisionBuilder;
 
 use GitHubRepoComparator\Comparision\BasicGitRepositoryComparision;
-use GitHubRepoComparator\Comparision\ComparisionDataSource;
 use GitHubRepoComparator\Comparision\GitRepositoryComparision;
-use GitHubRepoComparator\GitRepository\ComparableRepository\ComparableGitRepository;
 
 class BasicGitRepositoryComparisionBuilder extends AbstractComparisionBuilder
 {

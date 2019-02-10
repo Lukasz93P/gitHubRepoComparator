@@ -7,6 +7,7 @@ use GitHubRepoComparator\Http\Status\HttpStatus;
 
 class ValidationException extends ApiException
 {
+    const VALIDATION_FAILURE_MESSAGE = 'Validation failed';
     /**
      * @var
      */
@@ -14,12 +15,11 @@ class ValidationException extends ApiException
 
     /**
      * ValidationException constructor.
-     * @param string $message
      * @param array $validationErrors
      */
-    public function __construct($message, array $validationErrors)
+    public function __construct(array $validationErrors)
     {
-        parent::__construct($message, HttpStatus::HTTP_STATUS_UNPROCESSABLE_ENTITY);
+        parent::__construct(self::VALIDATION_FAILURE_MESSAGE, HttpStatus::HTTP_STATUS_UNPROCESSABLE_ENTITY);
         $this->validationErrors = $validationErrors;
     }
 

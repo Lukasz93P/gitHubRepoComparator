@@ -3,10 +3,11 @@ import {Card} from 'react-materialize';
 import {PieChart, Legend} from 'react-easy-chart';
 
 export default ({Icon, title, comparision, ...rest}) => {
-    const chartData = [{key: comparision.firstRepositoryName, value: comparision.first.quantity}, {
-        key: comparision.secondRepositoryName,
-        value: comparision.second.quantity
+    const {first, second, firstRepositoryName, secondRepositoryName} = comparision;
+    const chartData = [{key: firstRepositoryName, value: first.quantity}, {
+        key: secondRepositoryName, value: second.quantity
     }];
+
     return (<div className="col-10 col-md-3 text-center">
         <Card {...rest}>
             <Icon medium/>

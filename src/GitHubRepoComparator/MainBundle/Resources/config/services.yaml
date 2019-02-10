@@ -12,9 +12,12 @@ services:
   gitRepositoryComparator:
     class: GitHubRepoComparator\Comparision\Comparator\BasicGitRepositoryComparator
     arguments: [@comparisionBuilder]
+  repositoryDataApiClient:
+    class: GitHubRepoComparator\Http\Client\RepositoryDataApiClient\BasicRepositoryDataApiClient
+    arguments: [@httpClient]
   repositoryAmplifier:
     class: GitHubRepoComparator\ComparableGitRepositoryDataAmplifier\BasicComparableGitRepositoryDataAmplifier
-    arguments: [@httpClient, 'https://api.github.com/repos']
+    arguments: [@repositoryDataApiClient]
   actionValidateRepositoryData:
     class: GitHubRepoComparator\Actions\RepositoryDataValidation\BasicValidateRepositoryAction
     arguments: [@customValidator]
@@ -32,7 +35,7 @@ services:
     arguments: [@actionCreateComparableRepository, @actionAmplifyGitRepository, @actionCompareRepositories]
   comparisionController:
     class: GitHubRepoComparator\MainBundle\Controller\ComparisionController
-#    arguments: [@actionProcessComparisionRequest, @serializer]
+    arguments: [@actionProcessComparisionRequest, @serializer]
   api.error.handler:
     class: GitHubRepoComparator\MainBundle\EventListener\ApiExceptionHandler
     tags:

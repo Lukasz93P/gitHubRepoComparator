@@ -2,7 +2,7 @@
 
 namespace GitHubRepoComparator\Http\Status;
 
-class HttpStatus
+final class HttpStatus
 {
     const HTTP_STATUS_OK = 200;
     const HTTP_STATUS_UNPROCESSABLE_ENTITY = 422;
