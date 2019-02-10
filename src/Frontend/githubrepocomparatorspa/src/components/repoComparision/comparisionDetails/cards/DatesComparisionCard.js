@@ -4,8 +4,8 @@ import {Card} from 'react-materialize';
 import DateIcon from '../../../shared/icons/built/DateIcon';
 
 export default ({Icon, title, comparision, ...rest}) => {
-    const {newer, diff, first, second} = comparision;
-    const newerRepoName = newer === 'tie' ? newer : (newer === comparision.firstRepositoryName ? comparision.firstRepositoryName : comparision.secondRepositoryName);
+    const {newer, diff, firstRepositoryName, secondRepositoryName} = comparision;
+    const newerRepoName = newer === 'tie' ? newer : (newer === firstRepositoryName ? firstRepositoryName : secondRepositoryName);
     return (<div className="col-10 col-md-3 text-center">
         <Card {...rest}>
             <DateIcon medium/>

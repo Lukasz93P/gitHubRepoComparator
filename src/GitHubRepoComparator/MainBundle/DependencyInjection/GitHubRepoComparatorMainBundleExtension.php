@@ -7,10 +7,6 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 
-/**
- * Class GitHubRepoComparatorMainBundleExtension
- * @package GitHubRepoComparator\MainBundle\DependencyInjection
- */
 final class GitHubRepoComparatorMainBundleExtension extends Extension
 {
     const ALIAS = 'github_repo_comparator';

@@ -2,15 +2,15 @@
 
 namespace GitHubRepoComparator\MainBundle\Controller;
 
-use Carbon\Carbon;
 use GitHubRepoComparator\Actions\RepositoryComparisionRequestProcessing\ActionProcessRepositoryComparisionRequest;
-use GitHubRepoComparator\Actions\RepositoryComparisionRequestProcessing\BaseActionProcessRepositoryComparisionRequestAction;
 use GitHubRepoComparator\Serialization\Serializer\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @Route(service="comparisionController")
+ */
 class ComparisionController extends Controller
 {
     /**
@@ -23,17 +23,17 @@ class ComparisionController extends Controller
      */
     private $serializer;
 
-//    /**
-//     * ComparisionController constructor.
-//     * @param ActionProcessRepositoryComparisionRequest $actionProcessRepositoryComparisionRequest
-//     * @param Serializer $serializer
-//     */
-//    public function __construct(ActionProcessRepositoryComparisionRequest $actionProcessRepositoryComparisionRequest,
-//                                Serializer $serializer)
-//    {
-//        $this->actionProcessRepositoryComparisionRequest = $actionProcessRepositoryComparisionRequest;
-//        $this->serializer = $serializer;
-//    }
+    /**
+     * ComparisionController constructor.
+     * @param ActionProcessRepositoryComparisionRequest $actionProcessRepositoryComparisionRequest
+     * @param Serializer $serializer
+     */
+    public function __construct(ActionProcessRepositoryComparisionRequest $actionProcessRepositoryComparisionRequest,
+                                Serializer $serializer)
+    {
+        $this->actionProcessRepositoryComparisionRequest = $actionProcessRepositoryComparisionRequest;
+        $this->serializer = $serializer;
+    }
 
     /**
      * @param string $firstAuthor
@@ -45,10 +45,9 @@ class ComparisionController extends Controller
      */
     public function testAction($firstAuthor, $firstRepo, $secondAuthor, $secondRepo)
     {
-        $action = $this->get('actionProcessComparisionRequest');
-        $comparision = $action->execute($firstAuthor, $firstRepo, $secondAuthor, $secondRepo);
-        $serializer = $this->get('serializer');
+        $comparision = $this->actionProcessRepositoryComparisionRequest
+            ->execute($firstAuthor, $firstRepo, $secondAuthor, $secondRepo);
 
-        return new Response($serializer->serialize($comparision));
+        return new Response($this->serializer->serialize($comparision));
     }
 }

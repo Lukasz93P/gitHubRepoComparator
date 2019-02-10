@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
 
 import NumericValuesComparisionCard from './cards/NumericValuesComparisionCard';
 import StarIcon from '../../shared/icons/built/StarIcon';
@@ -21,32 +20,39 @@ class ComparisionDetails extends Component {
         const {error, loaded} = this.props;
 
         if (!loaded) {
-            return (<StandardLoader size="big"/>)
+            return (<StandardLoader/>)
         }
         if (error) {
-            console.log('!!!!!!!!fsdfdsfdsfsdf!!!', error);
             return (<Warnings error={error}/>);
         }
-        const firstComparedRepo = comparedRepositories[0];
-        const secondComparedRepo = comparedRepositories[1];
+
+        const [firstComparedRepo, secondComparedRepo] = comparedRepositories;
+        const firstRepositoryName = firstComparedRepo.fullName;
+        const secondRepositoryName = secondComparedRepo.fullName;
+
         return (<div className="row justify-content-center min-vw-100 container">
             <div className="row justify-content-center align-items-start min-vw-100">
-                <NumericValuesComparisionCard Icon={StarIcon} comparision={{
-                    ...starsComparision,
-                    firstRepositoryName: firstComparedRepo.fullName, secondRepositoryName: secondComparedRepo.fullName
-                }} title="Stars comparision"/>
-                <NumericValuesComparisionCard Icon={WatcherIcon} comparision={{
-                    ...watchersComparision,
-                    firstRepositoryName: firstComparedRepo.fullName, secondRepositoryName: secondComparedRepo.fullName
-                }} title="Watchers comparision"/>
-                <NumericValuesComparisionCard Icon={SwapIcon} comparision={{
-                    ...forksComparision,
-                    firstRepositoryName: firstComparedRepo.fullName, secondRepositoryName: secondComparedRepo.fullName
-                }} title="Forks comparision"/>
-                <DatesComparisionCard title="Last release date comparision" comparision={{
-                    ...lastReleaseDateComparision,
-                    firstRepositoryName: firstComparedRepo.fullName, secondRepositoryName: secondComparedRepo.fullName
-                }}/>
+                <NumericValuesComparisionCard Icon={StarIcon}
+                                              comparision={{
+                                                  ...starsComparision,
+                                                  firstRepositoryName,
+                                                  secondRepositoryName
+                                              }} title="Stars comparision"/>
+                <NumericValuesComparisionCard Icon={WatcherIcon}
+                                              comparision={{
+                                                  ...watchersComparision,
+                                                  firstRepositoryName, secondRepositoryName
+                                              }} title="Watchers comparision"/>
+                <NumericValuesComparisionCard Icon={SwapIcon}
+                                              comparision={{
+                                                  ...forksComparision,
+                                                  firstRepositoryName, secondRepositoryName
+                                              }} title="Forks comparision"/>
+                <DatesComparisionCard title="Last release date comparision"
+                                      comparision={{
+                                          ...lastReleaseDateComparision,
+                                          firstRepositoryName, secondRepositoryName
+                                      }}/>
             </div>
             <div className="row justify-content-center align-items-center min-vw-100">
                 {comparedRepositories.map((repository, index) => {

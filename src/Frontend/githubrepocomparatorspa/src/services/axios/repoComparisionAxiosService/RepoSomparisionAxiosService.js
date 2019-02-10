@@ -1,11 +1,9 @@
 import axios from 'axios';
 
+import {COMPARATOR_API_URL} from "../../../config";
+
 class RepoComparisionAxiosService {
 
-    /**
-     * @protected
-     * @type {AxiosInstance}
-     */
     service;
 
     constructor() {
@@ -14,7 +12,7 @@ class RepoComparisionAxiosService {
 
     init = () => {
         this.service = axios.create({
-            baseURL: '/symfony/gitHubRepoComparator/web/app_dev.php/comparator/compare/',
+            baseURL: COMPARATOR_API_URL,
             timeout: 99999999999999999,
         });
     };

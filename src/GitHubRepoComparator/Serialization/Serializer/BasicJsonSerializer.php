@@ -4,10 +4,6 @@ namespace GitHubRepoComparator\Serialization\Serializer;
 
 use GitHubRepoComparator\Serialization\Serializable\Serializable;
 
-/**
- * Class BasicJsonSerializer
- * @package Stereotypes\ApiStereotypes\Serializer
- */
 class BasicJsonSerializer implements Serializer
 {
     /**
@@ -35,7 +31,7 @@ class BasicJsonSerializer implements Serializer
         $serializableDataArray = array();
         foreach ($serializableFieldsName as $name) {
             $getterName = 'get' . $name;
-            $serializableValue = $this->getSerializableValueData($serializable->$getterName());
+            $serializableValue = $this->getValueForPropertyOfSerializableObject($serializable->$getterName());
             $serializableDataArray[$name] = $serializableValue;
         }
 
@@ -46,7 +42,7 @@ class BasicJsonSerializer implements Serializer
      * @param mixed $value
      * @return mixed
      */
-    private function getSerializableValueData($value)
+    private function getValueForPropertyOfSerializableObject($value)
     {
         if (is_array($value)) {
             $serializableValueData = array();

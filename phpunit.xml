@@ -10,7 +10,11 @@
         processIsolation="false"
         stopOnFailure="false"
         syntaxCheck="false"
+
 >
+    <php>
+        <ini name="display_startup_errors" value="true"/>
+    </php>
     <testsuites>
         <testsuite name="Application Test Suite">
             <directory>./src/*</directory>

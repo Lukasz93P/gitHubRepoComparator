@@ -5,10 +5,6 @@ namespace GitHubRepoComparator\Http\Client;
 use Curl\Curl;
 use GitHubRepoComparator\Exception\HttpClientException\HttpClientException;
 
-/**
- * Class CurlHttpClient
- * @package Stereotypes\HttpStereotypes\HttpClient
- */
 class CurlHttpClient implements HttpClient
 {
     /**

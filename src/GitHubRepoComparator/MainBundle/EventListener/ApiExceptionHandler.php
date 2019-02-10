@@ -10,8 +10,6 @@ use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 
 class ApiExceptionHandler
 {
-    const ERRORS_RESPONSE_KEY = 'errors';
-    const ERROR_RESPONSE_KEY = 'error';
     const ERROR_MESSAGE_RESPONSE_KEY = 'message';
     const UNEXPECTED_ERROR_MESSAGE = 'Unexpected error';
     const VALIDATION_ERRORS_RESPONSE_KEY = 'validationErrors';
@@ -25,8 +23,8 @@ class ApiExceptionHandler
 
         $exceptionStatusCode = $exception instanceof ApiException ? $exception->getCode() : HttpStatus::HTTP_STATUS_INTERNAL_SERVER_ERROR;
         $exceptionData = $this->prepareExceptionData($exception);
-        $response = new JsonResponse($exceptionData);
 
+        $response = new JsonResponse($exceptionData);
         $response->setStatusCode($exceptionStatusCode ? $exceptionStatusCode : HttpStatus::HTTP_STATUS_INTERNAL_SERVER_ERROR);
         $response->headers->set('Content-Type', 'application/json');
 
