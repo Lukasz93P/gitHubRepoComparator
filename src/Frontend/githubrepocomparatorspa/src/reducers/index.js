@@ -4,10 +4,10 @@ import thunk from 'redux-thunk';
 
 import {reducer as formReducer} from 'redux-form';
 
-import {usersReducer, userReducer} from "./users/usersReducers";
+import {repoComparisionReducer} from "./repoComparision/repoComparisionReducers";
 
 export default () => {
-    const combinedReducer = redux.combineReducers({form: formReducer, users: usersReducer, user: userReducer});
+    const combinedReducer = redux.combineReducers({form: formReducer, repoComparision: repoComparisionReducer});
 
     return redux.createStore(combinedReducer, redux.applyMiddleware(logger, thunk));
 }

@@ -32,6 +32,16 @@ class BasicComparableGitRepository implements ComparableGitRepository
     private $lastReleaseDate;
 
     /**
+     * @var string
+     */
+    private $url;
+
+    /**
+     * @var string
+     */
+    private $avatarUrl;
+
+    /**
      * BasicComparableGitRepository constructor.
      * @param GitRepository $gitRepository
      */
@@ -137,6 +147,42 @@ class BasicComparableGitRepository implements ComparableGitRepository
     }
 
     /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     * @return BasicComparableGitRepository
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAvatarUrl()
+    {
+        return $this->avatarUrl;
+    }
+
+    /**
+     * @param string $avatarUrl
+     * @return BasicComparableGitRepository
+     */
+    public function setAvatarUrl($avatarUrl)
+    {
+        $this->avatarUrl = $avatarUrl;
+        return $this;
+    }
+
+    /**
      * @param $name
      * @param $arguments
      * @return mixed
@@ -153,6 +199,6 @@ class BasicComparableGitRepository implements ComparableGitRepository
      */
     public function getSerializableProperties()
     {
-        return array('authorName', 'name', 'fullName');
+        return array('authorName', 'name', 'fullName', 'url', 'avatarUrl');
     }
 }

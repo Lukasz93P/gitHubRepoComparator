@@ -50,4 +50,26 @@ interface ComparableGitRepository extends GitRepository, Serializable
      * @return string
      */
     public function getLastReleaseDate();
+
+    /**
+     * @param string $url
+     * @return $this
+     */
+    public function setUrl($url);
+
+    /**
+     * @return string
+     */
+    public function getUrl();
+
+    /**
+     * @param string $avatarUrl
+     * @return $this
+     */
+    public function setAvatarUrl($avatarUrl);
+
+    /**
+     * @return string
+     */
+    public function getAvatarUrl();
 }
