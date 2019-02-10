@@ -7,8 +7,6 @@ final class ComparisionHelper
     const FIRST_PERCENTAGE_COMPARISION_VALUE = 'firstPercentage';
     const SECOND_PERCENTAGE_COMPARISION_VALUE = 'secondPercentage';
 
-    const NEWER_DATE_COMPARISION_VALUE = 'newer';
-
     private function __construct()
     {
     }

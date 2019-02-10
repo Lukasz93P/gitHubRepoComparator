@@ -7,6 +7,9 @@ use GitHubRepoComparator\GitRepository\ComparableRepository\ComparableGitReposit
 
 interface GitRepositoryComparator
 {
+    const FIRST_REPOSITORY_COMPARISION_KEY = 'first';
+    const SECOND_REPOSITORY_COMPARISION_KEY = 'second';
+
     /**
      * @param ComparableGitRepository $firstRepository
      * @param ComparableGitRepository $secondRepository

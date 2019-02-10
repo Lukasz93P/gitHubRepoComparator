@@ -2,6 +2,7 @@
 
 namespace GitHubRepoComparator\MainBundle\Controller;
 
+use Carbon\Carbon;
 use GitHubRepoComparator\Actions\RepositoryComparisionRequestProcessing\ActionProcessRepositoryComparisionRequest;
 use GitHubRepoComparator\Actions\RepositoryComparisionRequestProcessing\BaseActionProcessRepositoryComparisionRequestAction;
 use GitHubRepoComparator\Serialization\Serializer\Serializer;
@@ -47,7 +48,7 @@ class ComparisionController extends Controller
         $action = $this->get('actionProcessComparisionRequest');
         $comparision = $action->execute($firstAuthor, $firstRepo, $secondAuthor, $secondRepo);
         $serializer = $this->get('serializer');
- 
+
         return new Response($serializer->serialize($comparision));
     }
 }

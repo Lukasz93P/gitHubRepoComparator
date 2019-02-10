@@ -66,23 +66,23 @@ class BasicGitRepositoryComparator implements GitRepositoryComparator
         $secondRepositoryPercentageScore = $percentageCalculationValues[ComparisionHelper::SECOND_PERCENTAGE_COMPARISION_VALUE];
 
         if ($firstQuantity == $secondQuantity) {
-            $better = GitRepositoryComparision::TIE_COMPARISION_KEY;
+            $repositoryWithHigherScore = GitRepositoryComparision::TIE_COMPARISION_KEY;
         } else {
-            $better = $firstRepositoryPercentageScore > $secondRepositoryPercentageScore
-                ? $firstRepository->getFullName()
-                : $secondRepository->getFullName();
+            $repositoryWithHigherScore = $firstRepositoryPercentageScore > $secondRepositoryPercentageScore
+                ? self::FIRST_REPOSITORY_COMPARISION_KEY
+                : self::SECOND_REPOSITORY_COMPARISION_KEY;
         }
 
         return array(
-            $firstRepository->getFullName() =>
+            self::FIRST_REPOSITORY_COMPARISION_KEY =>
                 array(GitRepositoryComparision::QUANTITY_COMPARISION_KEY => $firstQuantity,
                     GitRepositoryComparision::PERCENTAGE_COMPARISION_KEY =>
                         $firstRepositoryPercentageScore),
-            $secondRepository->getFullName() =>
+            self::SECOND_REPOSITORY_COMPARISION_KEY =>
                 array(GitRepositoryComparision::QUANTITY_COMPARISION_KEY => $secondQuantity,
                     GitRepositoryComparision::PERCENTAGE_COMPARISION_KEY =>
                         $secondRepositoryPercentageScore),
-            GitRepositoryComparision::BETTER_SCORE_COMPARISION_KEY => $better,
+            GitRepositoryComparision::MORE_SCORE_COMPARISION_KEY => $repositoryWithHigherScore,
         );
     }
 
@@ -133,13 +133,15 @@ class BasicGitRepositoryComparator implements GitRepositoryComparator
         if ($daysDiff === 0) {
             $newer = GitRepositoryComparision::TIE_COMPARISION_KEY;
         } else {
-            $newer = $firstRepoLastReleaseDate > $secondRepoLastReleaseDate ? $firstRepo->getFullName() : $secondRepo->getFullName();
+            $newer = $firstRepoLastReleaseDate > $secondRepoLastReleaseDate
+                ? self::FIRST_REPOSITORY_COMPARISION_KEY
+                : self::SECOND_REPOSITORY_COMPARISION_KEY;
         }
 
         $releaseDateComparision[GitRepositoryComparision::RELEASE_DATE_COMPARISION_NEWER_KEY] = $newer;
         $releaseDateComparision[GitRepositoryComparision::RELEASE_DATE_COMPARISION_DIFF_KEY] = abs($daysDiff);
-        $releaseDateComparision[$firstRepo->getFullName()] = $firstRepoLastReleaseDate->toDateString();
-        $releaseDateComparision[$secondRepo->getFullName()] = $secondRepoLastReleaseDate->toDateString();
+        $releaseDateComparision[self::FIRST_REPOSITORY_COMPARISION_KEY] = $firstRepoLastReleaseDate->toDateString();
+        $releaseDateComparision[self::SECOND_REPOSITORY_COMPARISION_KEY] = $secondRepoLastReleaseDate->toDateString();
 
         return $releaseDateComparision;
     }

@@ -7,6 +7,7 @@ use GitHubRepoComparator\Exception\HttpClientException\HttpClientException;
 use GitHubRepoComparator\GitRepository\ComparableRepository\ComparableGitRepository;
 use GitHubRepoComparator\Http\Client\HttpClient;
 use GitHubRepoComparator\Http\Status\HttpStatus;
+use GitHubRepoComparator\Utils\DateUtils\DateHelper;
 use GitHubRepoComparator\Utils\UrlUtils\UrlHelper;
 
 class BasicComparableGitRepositoryDataAmplifier implements ComparableGitRepositoryDataAmplifier
@@ -58,13 +59,15 @@ class BasicComparableGitRepositoryDataAmplifier implements ComparableGitReposito
         }
 
         return $this->fillInRepositoryWithData($gitRepository, $repositoryStatisticsData, $repositoryReleasesData);
-//
-//
-//        $gitRepository->setStarsQuantity(static::$counter ? 100 : 20);
-//        $gitRepository->setForksQuantity(static::$counter ? 10 : 20);
-//        $gitRepository->setWatchersQuantity(static::$counter ? 5 : 2);
-//        $gitRepository->setLastReleaseDate(static::$counter ? '2019-02-01' : '2019-01-02');
-//        static::$counter=true;
+
+
+        $gitRepository->setStarsQuantity(static::$counter ? 100 : 20);
+        $gitRepository->setForksQuantity(static::$counter ? 10 : 20);
+        $gitRepository->setWatchersQuantity(static::$counter ? 5 : 2);
+        $gitRepository->setLastReleaseDate(static::$counter ? '2019-02-01' : '2019-01-02');
+        $gitRepository->setAvatarUrl("https://secure.gravatar.com/avatar/592e1e6f041f9a4ec51846fd82013aea?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png");
+        $gitRepository->setUrl("https://github.com/jasonrudolph/keyboard");
+        static::$counter=true;
         return $gitRepository;
     }
 
@@ -82,7 +85,7 @@ class BasicComparableGitRepositoryDataAmplifier implements ComparableGitReposito
         $repository->setUrl($statisticsData[self::REPOSITORY_URL_GIT_HUB_RESPONSE_KEY]);
         $repository->setAvatarUrl($statisticsData[self::OWNER_DATA_GITHUB_RESPONSE_KEY][self::AVATAR_URL_GITHUB_RESPONSE_KEY]);
         $repository->setLastReleaseDate(empty($releasesData) ? ''
-            : $releasesData[0][self::PUBLISHED_AT_RELEASE_GITHUB_RESPONSE_KEY]);
+            : DateHelper::trimDateString($releasesData[0][self::PUBLISHED_AT_RELEASE_GITHUB_RESPONSE_KEY]));
 
         return $repository;
     }

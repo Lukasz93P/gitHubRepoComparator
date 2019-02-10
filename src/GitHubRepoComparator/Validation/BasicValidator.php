@@ -28,7 +28,7 @@ class BasicValidator implements Validator
         }
 
         if (!empty($this->validationErrors)) {
-            throw new ValidationException('validation failed', $this->validationErrors);
+            throw new ValidationException('Validation failed', $this->validationErrors);
         }
     }
 
