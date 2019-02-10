@@ -91,7 +91,7 @@ class BasicJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $serializable = $this->getMock('GitHubRepoComparator\Serialization\Serializable\Serializable',
             array('getSerializableProperties'));
 
-        $serializable->expects($this->exactly(2))
+        $serializable->expects($this->once())
             ->method('getSerializableProperties')
             ->will($this->returnValue(array()));
 

@@ -40,9 +40,8 @@ class ApiExceptionHandler
     private
     function prepareExceptionData(ApiException $exception)
     {
-        $responseData = array();
         if ($exception instanceof ValidationException) {
-            $responseData['validationErrors'] = $exception->getValidationErrors();
+            $responseData['error'] = $exception->getValidationErrors();
         }
         $responseData['message'] = $exception->getMessage();
 

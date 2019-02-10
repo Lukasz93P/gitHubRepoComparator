@@ -38,6 +38,7 @@ class BasicCreateComparableRepositoryAction implements ActionCreateComparableRep
     public function execute(array $data)
     {
         $this->actionValidateRepositoryData->execute($data);
+
         return $this->repositoryFactory->makeComparableGitRepository($data['authorName'], $data['name']);
     }
 }

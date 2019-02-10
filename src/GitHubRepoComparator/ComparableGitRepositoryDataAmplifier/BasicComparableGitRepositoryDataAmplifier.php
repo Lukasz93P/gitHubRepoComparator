@@ -7,6 +7,7 @@ use GitHubRepoComparator\Exception\HttpClientException\HttpClientException;
 use GitHubRepoComparator\GitRepository\ComparableRepository\ComparableGitRepository;
 use GitHubRepoComparator\Http\Client\HttpClient;
 use GitHubRepoComparator\Http\Status\HttpStatus;
+use GitHubRepoComparator\Utils\UrlUtils\UrlHelper;
 
 class BasicComparableGitRepositoryDataAmplifier implements ComparableGitRepositoryDataAmplifier
 {
@@ -21,6 +22,7 @@ class BasicComparableGitRepositoryDataAmplifier implements ComparableGitReposito
     private $gitHubApiLinkToFetchRepoData;
 
     static $counter = 0;
+
     /**
      * BasicComparableGitRepositoryDataAmplifier constructor.
      * @param HttpClient $httpClient
@@ -39,20 +41,18 @@ class BasicComparableGitRepositoryDataAmplifier implements ComparableGitReposito
      */
     public function amplifyRepository(ComparableGitRepository $gitRepository)
     {
-        $linkToGetRepositoryData = str_replace(array('%2F', '%3A'), array('/', ':'), rawurlencode($this->gitHubApiLinkToFetchRepoData . '/'
-            . $gitRepository->getFullName()));
+        $linkToRepositoryStatisticsData = $this->generateLinkToRepoStatistics($gitRepository);
+        $linkToRepositoryReleasesData = $this->generateLinkToRepoReleases($gitRepository);
 
         try {
-            $repositoryStatisticsData = $this->httpClient->sendRequest($linkToGetRepositoryData, HttpClient::METHOD_GET)
+            $repositoryStatisticsData = $this->httpClient->sendRequest($linkToRepositoryStatisticsData, HttpClient::METHOD_GET)
                 ->getResponseData();
-            $repositoryReleasesData = $this->httpClient->sendRequest($linkToGetRepositoryData . self::GITHUB_API_RELEASES_INFO_LINK_APPENDIX,
-                HttpClient::METHOD_GET)
+            $repositoryReleasesData = $this->httpClient->sendRequest($linkToRepositoryReleasesData, HttpClient::METHOD_GET)
                 ->getResponseData();
 
         } catch (HttpClientException $exception) {
             if ($exception->getCode() == HttpStatus::HTTP_STATUS_NOT_FOUND) {
-                throw new RepositoryNotFoundException('Repository ' . $gitRepository->getName() . ' by '
-                    . $gitRepository->getAuthorName() . ' not found');
+                throw new RepositoryNotFoundException($gitRepository->getName(), $gitRepository->getAuthorName());
             }
             throw $exception;
         }
@@ -70,5 +70,23 @@ class BasicComparableGitRepositoryDataAmplifier implements ComparableGitReposito
 //        $gitRepository->setLastReleaseDate(static::$counter ? '2019-02-01' : '2019-01-02');
 //        static::$counter=true;
         return $gitRepository;
+    }
+
+    /**
+     * @param ComparableGitRepository $gitRepository
+     * @return string
+     */
+    private function generateLinkToRepoStatistics(ComparableGitRepository $gitRepository)
+    {
+        return UrlHelper::encodeUrl($this->gitHubApiLinkToFetchRepoData . '/' . $gitRepository->getFullName());
+    }
+
+    /**
+     * @param ComparableGitRepository $gitRepository
+     * @return string
+     */
+    private function generateLinkToRepoReleases(ComparableGitRepository $gitRepository)
+    {
+        return $this->generateLinkToRepoStatistics($gitRepository) . self::GITHUB_API_RELEASES_INFO_LINK_APPENDIX;
     }
 }
