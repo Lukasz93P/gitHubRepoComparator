@@ -9,7 +9,12 @@ import {Provider} from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 
-ReactDOM.render(<BrowserRouter><Provider><App/></Provider></BrowserRouter>, document.getElementById('root'));
+import initStore from './reducers/index';
+
+const store = initStore();
+
+ReactDOM.render(<BrowserRouter><Provider
+    store={store}><App/></Provider></BrowserRouter>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

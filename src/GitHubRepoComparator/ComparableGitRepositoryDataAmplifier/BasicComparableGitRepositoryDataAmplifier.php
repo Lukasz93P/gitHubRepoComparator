@@ -57,11 +57,7 @@ class BasicComparableGitRepositoryDataAmplifier implements ComparableGitReposito
             throw $exception;
         }
 
-        $gitRepository->setStarsQuantity($repositoryStatisticsData[self::STARS_QUANTITY_GITHUB_RESPONSE_KEY]);
-        $gitRepository->setForksQuantity($repositoryStatisticsData[self::FORKS_QUANTITY_GITHUB_RESPONSE_KEY]);
-        $gitRepository->setWatchersQuantity($repositoryStatisticsData[self::WATCHERS_QUANTITY_GITHUB_RESPONSE_KEY]);
-        $gitRepository->setLastReleaseDate(empty($repositoryReleasesData) ? ''
-            : $repositoryReleasesData[0][self::PUBLISHED_AT_RELEASE_GITHUB_RESPONSE_KEY]);
+        return $this->fillInRepositoryWithData($gitRepository, $repositoryStatisticsData, $repositoryReleasesData);
 //
 //
 //        $gitRepository->setStarsQuantity(static::$counter ? 100 : 20);
@@ -70,6 +66,25 @@ class BasicComparableGitRepositoryDataAmplifier implements ComparableGitReposito
 //        $gitRepository->setLastReleaseDate(static::$counter ? '2019-02-01' : '2019-01-02');
 //        static::$counter=true;
         return $gitRepository;
+    }
+
+    /**
+     * @param ComparableGitRepository $repository
+     * @param array $statisticsData
+     * @param array $releasesData
+     * @return ComparableGitRepository
+     */
+    private function fillInRepositoryWithData(ComparableGitRepository $repository, array $statisticsData, array $releasesData)
+    {
+        $repository->setStarsQuantity($statisticsData[self::STARS_QUANTITY_GITHUB_RESPONSE_KEY]);
+        $repository->setForksQuantity($statisticsData[self::FORKS_QUANTITY_GITHUB_RESPONSE_KEY]);
+        $repository->setWatchersQuantity($statisticsData[self::WATCHERS_QUANTITY_GITHUB_RESPONSE_KEY]);
+        $repository->setUrl($statisticsData[self::REPOSITORY_URL_GIT_HUB_RESPONSE_KEY]);
+        $repository->setAvatarUrl($statisticsData[self::OWNER_DATA_GITHUB_RESPONSE_KEY][self::AVATAR_URL_GITHUB_RESPONSE_KEY]);
+        $repository->setLastReleaseDate(empty($releasesData) ? ''
+            : $releasesData[0][self::PUBLISHED_AT_RELEASE_GITHUB_RESPONSE_KEY]);
+
+        return $repository;
     }
 
     /**
