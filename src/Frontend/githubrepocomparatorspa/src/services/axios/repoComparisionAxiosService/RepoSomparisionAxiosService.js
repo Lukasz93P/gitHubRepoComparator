@@ -8,11 +8,18 @@ class RepoComparisionAxiosService {
      */
     service;
 
-    /**
-     * @private
-     * @param {object} config
-     */
-    init = config => {
-        this.service = axios.create(config);
+    constructor() {
+        this.init();
+    }
+
+    init = () => {
+        this.service = axios.create({
+            baseURL: '/symfony/gitHubRepoComparator/web/app_dev.php/comparator/compare/',
+            timeout: 99999999999999999,
+        });
     };
+
+    compareRepos = (firstAuthor, firstRepo, secondAuthor, secondRepo) => this.service.get([firstAuthor, firstRepo, secondAuthor, secondRepo].join('/'));
 }
+
+export default new RepoComparisionAxiosService();

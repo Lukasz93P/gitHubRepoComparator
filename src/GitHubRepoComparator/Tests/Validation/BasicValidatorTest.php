@@ -2,7 +2,9 @@
 
 namespace GitHubRepoComparator\Tests\Validation;
 
+use GitHubRepoComparator\Tests\TestUtils;
 use GitHubRepoComparator\Validation\BasicValidator;
+use GitHubRepoComparator\Validation\Validator;
 
 class BasicValidatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,16 +13,23 @@ class BasicValidatorTest extends \PHPUnit_Framework_TestCase
      */
     private $validator;
 
+    /**
+     * @var array
+     */
+    private $testData;
+
     protected function setUp()
     {
         parent::setUp();
         $this->validator = new BasicValidator();
+        $this->testData = array(TestUtils::FIRST_TEST_KEY => TestUtils::FIRST_TEST_VALUE,
+            TestUtils::SECOND_TEST_KEY => 'veeeeryLonggggWorddddd');
     }
 
     public function testShouldNotThrowValidationException()
     {
-        $data = array('testKey' => 'testValue');
-        $rules = array('testKey' => 'notempty');
+        $data = array(TestUtils::FIRST_TEST_KEY => TestUtils::FIRST_TEST_VALUE);
+        $rules = array(TestUtils::FIRST_TEST_KEY => Validator::NOT_EMPTY_VALIDATION_RULE);
 
         try {
             $this->validator->validate($rules, $data);
@@ -33,8 +42,10 @@ class BasicValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldThrowValidationException()
     {
-        $data = array('testKey' => '', 'secondTestKey' => 'fsdf');
-        $rules = array('testKey' => 'notempty', 'secondTestKey' => 'notempty', 'thirdTestKey' => 'notempty');
+        $data = array(TestUtils::FIRST_TEST_KEY => '', TestUtils::SECOND_TEST_KEY => 'fsdf');
+        $rules = array(TestUtils::FIRST_TEST_KEY => Validator::NOT_EMPTY_VALIDATION_RULE,
+            TestUtils::SECOND_TEST_KEY => Validator::NOT_EMPTY_VALIDATION_RULE,
+            TestUtils::THIRD_TEST_KEY => Validator::NOT_EMPTY_VALIDATION_RULE);
 
         $validationException = false;
 
@@ -46,17 +57,18 @@ class BasicValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNotEmpty($validationException);
         $this->assertEquals('GitHubRepoComparator\Exception\Validation\ValidationException', get_class($validationException));
-        $this->assertEquals(array('testKey' => array('Cannot be empty'), 'thirdTestKey' => array('Cannot be empty')),
+        $this->assertEquals(array(TestUtils::FIRST_TEST_KEY => array('Cannot be empty'),
+            TestUtils::THIRD_TEST_KEY => array('Cannot be empty')),
             $validationException->getValidationErrors());
     }
 
     public function testShouldNotThrowValidationExceptionForMaxValue()
     {
-        $data = array('testKey' => 'testValue', 'secondTestKey' => 'veeeeryLonggggWorddddd');
-        $rules = array('testKey' => 'max:10', 'secondTestKey' => 'max:40');
+        $rules = array(TestUtils::FIRST_TEST_KEY => Validator::MAX_VALIDATION_RULE . ':10',
+            TestUtils::SECOND_TEST_KEY => Validator::MAX_VALIDATION_RULE . ':40');
 
         try {
-            $this->validator->validate($rules, $data);
+            $this->validator->validate($rules, $this->testData);
         } catch (\Exception $exception) {
             $this->fail('Validation Exception was thrown ' . $exception->getMessage());
         }
@@ -66,28 +78,27 @@ class BasicValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldThrowValidationExceptionForMaxValue()
     {
-        $data = array('testKey' => 'testValue', 'secondTestKey' => 'veeeeryLonggggWorddddd');
-        $rules = array('testKey' => 'max:10', 'secondTestKey' => 'max:4');
+        $rules = array(TestUtils::FIRST_TEST_KEY => Validator::MAX_VALIDATION_RULE . ':10',
+            TestUtils::SECOND_TEST_KEY => Validator::MAX_VALIDATION_RULE . ':4');
 
         $testException = false;
 
         try {
-            $this->validator->validate($rules, $data);
+            $this->validator->validate($rules, $this->testData);
         } catch (\Exception $exception) {
             $testException = $exception;
         }
 
         $this->assertNotEmpty($testException);
-        $this->assertEquals(array('secondTestKey' => array('Cannot be greater than 4')), $testException->getValidationErrors());
+        $this->assertEquals(array(TestUtils::SECOND_TEST_KEY => array('Cannot be greater than 4')), $testException->getValidationErrors());
     }
 
     public function testShouldNotThrowValidationExceptionForMinValue()
     {
-        $data = array('testKey' => 'testValue', 'secondTestKey' => 'veeeeryLonggggWorddddd');
         $rules = array('testKey' => 'min:1', 'secondTestKey' => 'min:4');
 
         try {
-            $this->validator->validate($rules, $data);
+            $this->validator->validate($rules, $this->testData);
         } catch (\Exception $exception) {
             $this->fail('Validation Exception was thrown ' . $exception->getMessage());
         }
@@ -97,34 +108,37 @@ class BasicValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldThrowValidationExceptionForMinValue()
     {
-        $data = array('testKey' => 'testValue', 'secondTestKey' => 'veeeeryLonggggWorddddd');
-        $rules = array('testKey' => 'min:10', 'secondTestKey' => 'min:4');
+        $rules = array(TestUtils::FIRST_TEST_KEY => Validator::MAX_VALIDATION_RULE . ':10',
+            TestUtils::SECOND_TEST_KEY => Validator::MIN_VALIDATION_RULE . ':4');
 
         $testException = false;
 
         try {
-            $this->validator->validate($rules, $data);
+            $this->validator->validate($rules, $this->testData);
         } catch (\Exception $exception) {
             $testException = $exception;
         }
 
         $this->assertNotEmpty($testException);
-        $this->assertEquals(array('testKey' => array('Cannot be lower/shorter than 10')), $testException->getValidationErrors());
+        $this->assertEquals(array('testKey' => array('Cannot be lower/shorter than 10')),
+            $testException->getValidationErrors());
     }
 
-    public function testShouldThrowValidationExceptionForMaxValueWithMinAlsoSpecified(){
-        $data = array('testKey' => 'testValue', 'secondTestKey' => 'veeeeryLonggggWorddddd');
-        $rules = array('testKey' => 'max:10', 'secondTestKey' => 'max:4|min:2');
+    public function testShouldThrowValidationExceptionForMaxValueWithMinAlsoSpecified()
+    {
+        $rules = array(TestUtils::FIRST_TEST_KEY => Validator::MAX_VALIDATION_RULE . ':10',
+            TestUtils::SECOND_TEST_KEY => Validator::MAX_VALIDATION_RULE . ':4|' . Validator::MIN_VALIDATION_RULE . ':2');
 
         $testException = false;
 
         try {
-            $this->validator->validate($rules, $data);
+            $this->validator->validate($rules, $this->testData);
         } catch (\Exception $exception) {
             $testException = $exception;
         }
 
         $this->assertNotEmpty($testException);
-        $this->assertEquals(array('secondTestKey' => array('Cannot be greater than 4')), $testException->getValidationErrors());
+        $this->assertEquals(array('secondTestKey' => array('Cannot be greater than 4')),
+            $testException->getValidationErrors());
     }
 }

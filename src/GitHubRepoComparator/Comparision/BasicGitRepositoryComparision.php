@@ -83,8 +83,7 @@ class BasicGitRepositoryComparision extends ComparisionDataSource implements Git
      */
     public function getComparedRepositories()
     {
-        return array($this->firstComparedRepository->getFullName() => $this->firstComparedRepository,
-            $this->secondComparedRepository->getFullName() => $this->secondComparedRepository);
+        return array($this->firstComparedRepository, $this->secondComparedRepository);
     }
 
 

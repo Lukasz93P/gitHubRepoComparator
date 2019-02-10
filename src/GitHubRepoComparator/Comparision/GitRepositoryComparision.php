@@ -8,7 +8,7 @@ interface GitRepositoryComparision extends GitRepositoryComparisionBase, Seriali
 {
     const QUANTITY_COMPARISION_KEY = 'quantity';
     const PERCENTAGE_COMPARISION_KEY = 'percentage';
-    const BETTER_SCORE_COMPARISION_KEY = 'better';
+    const MORE_SCORE_COMPARISION_KEY = 'more';
     const TIE_COMPARISION_KEY = 'tie';
 
     const RELEASE_DATE_COMPARISION_FORMAT = 'Y-m-d';

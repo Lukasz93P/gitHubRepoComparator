@@ -28,6 +28,8 @@ class BasicValidateRepositoryAction implements ActionValidateRepositoryData
      */
     public function execute(array $data)
     {
-        $this->validator->validate(array('authorName' => 'notempty', 'name' => 'notempty'), $data);
+        $this->validator
+            ->validate(array('authorName' => Validator::NOT_EMPTY_VALIDATION_RULE,
+                'name' => Validator::NOT_EMPTY_VALIDATION_RULE), $data);
     }
 }

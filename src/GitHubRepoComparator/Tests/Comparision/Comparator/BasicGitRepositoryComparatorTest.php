@@ -87,7 +87,7 @@ class BasicGitRepositoryComparatorTest extends \PHPUnit_Framework_TestCase
                     'author2/repo2' =>
                         array(GitRepositoryComparision::QUANTITY_COMPARISION_KEY => 20,
                             GitRepositoryComparision::PERCENTAGE_COMPARISION_KEY => 67),
-                    GitRepositoryComparision::BETTER_SCORE_COMPARISION_KEY => 'author2/repo2')
+                    GitRepositoryComparision::MORE_SCORE_COMPARISION_KEY => 'author2/repo2')
             )
             ->willReturn($this->gitRepositoryComparisionBuilderMock);
 
@@ -100,7 +100,7 @@ class BasicGitRepositoryComparatorTest extends \PHPUnit_Framework_TestCase
                     'author2/repo2' =>
                         array(GitRepositoryComparision::QUANTITY_COMPARISION_KEY => 20,
                             GitRepositoryComparision::PERCENTAGE_COMPARISION_KEY => 50),
-                    GitRepositoryComparision::BETTER_SCORE_COMPARISION_KEY => GitRepositoryComparision::TIE_COMPARISION_KEY)
+                    GitRepositoryComparision::MORE_SCORE_COMPARISION_KEY => GitRepositoryComparision::TIE_COMPARISION_KEY)
             )
             ->willReturn($this->gitRepositoryComparisionBuilderMock);
 
@@ -113,7 +113,7 @@ class BasicGitRepositoryComparatorTest extends \PHPUnit_Framework_TestCase
                 'author2/repo2' =>
                     array(GitRepositoryComparision::QUANTITY_COMPARISION_KEY => 75,
                         GitRepositoryComparision::PERCENTAGE_COMPARISION_KEY => 60),
-                GitRepositoryComparision::BETTER_SCORE_COMPARISION_KEY => 'author2/repo2'))
+                GitRepositoryComparision::MORE_SCORE_COMPARISION_KEY => 'author2/repo2'))
             ->willReturn($this->gitRepositoryComparisionBuilderMock);
 
         $this->gitRepositoryComparisionBuilderMock->expects($this->once())

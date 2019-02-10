@@ -10,6 +10,12 @@ use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 
 class ApiExceptionHandler
 {
+    const ERRORS_RESPONSE_KEY = 'errors';
+    const ERROR_RESPONSE_KEY = 'error';
+    const ERROR_MESSAGE_RESPONSE_KEY = 'message';
+    const UNEXPECTED_ERROR_MESSAGE = 'Unexpected error';
+    const VALIDATION_ERRORS_RESPONSE_KEY = 'validationErrors';
+
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
         $exception = $event->getException();
@@ -17,14 +23,8 @@ class ApiExceptionHandler
             return;
         }
 
-        if ($exception instanceof ApiException) {
-            $exceptionData = $this->prepareExceptionData($exception);
-            $exceptionStatusCode = $exception->getCode();
-        } else {
-            $exceptionData = array('message' => 'Unexpected error');
-            $exceptionStatusCode = 500;
-        }
-
+        $exceptionStatusCode = $exception instanceof ApiException ? $exception->getCode() : HttpStatus::HTTP_STATUS_INTERNAL_SERVER_ERROR;
+        $exceptionData = $this->prepareExceptionData($exception);
         $response = new JsonResponse($exceptionData);
 
         $response->setStatusCode($exceptionStatusCode ? $exceptionStatusCode : HttpStatus::HTTP_STATUS_INTERNAL_SERVER_ERROR);
@@ -34,17 +34,27 @@ class ApiExceptionHandler
     }
 
     /**
-     * @param ApiException $exception
+     * @param \Exception $exception
      * @return array
      */
-    private
-    function prepareExceptionData(ApiException $exception)
+    private function prepareExceptionData(\Exception $exception)
     {
-        if ($exception instanceof ValidationException) {
-            $responseData['error'] = $exception->getValidationErrors();
+        if (!$exception instanceof ApiException) {
+            return $this->generateInternalServerErrorData();
         }
-        $responseData['message'] = $exception->getMessage();
+        if ($exception instanceof ValidationException) {
+            $responseData[self::VALIDATION_ERRORS_RESPONSE_KEY] = $exception->getValidationErrors();
+        }
+        $responseData[self::ERROR_MESSAGE_RESPONSE_KEY] = $exception->getMessage();
 
         return $responseData;
+    }
+
+    /**
+     * @return array
+     */
+    private function generateInternalServerErrorData()
+    {
+        return array(self::ERROR_MESSAGE_RESPONSE_KEY => self::UNEXPECTED_ERROR_MESSAGE);
     }
 }
